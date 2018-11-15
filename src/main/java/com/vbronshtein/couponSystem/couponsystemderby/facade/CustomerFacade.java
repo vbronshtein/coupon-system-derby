@@ -99,5 +99,8 @@ public class CustomerFacade implements CouponClientFacade {
         return null;
     }
 
+    public Collection<Coupon> getAllCoupons() throws CouponSystemException {
+        return  couponDbDao.getAllCoupons();
+    }
 }
 

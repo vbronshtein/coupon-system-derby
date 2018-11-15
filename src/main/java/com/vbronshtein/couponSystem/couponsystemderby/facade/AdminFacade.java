@@ -143,7 +143,7 @@ public class AdminFacade implements CouponClientFacade {
     /**
      * Remove customer from DB
      *
-     * @param customer Customer
+     * @param id Customer ID
      * @throws CouponSystemException
      */
     public void removeCustomer(long id) throws CouponSystemException {

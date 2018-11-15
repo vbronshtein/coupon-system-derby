@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 public class CustomerWS {
 
     // void purchaseCoupon(Coupon coupon)
@@ -21,6 +22,14 @@ public class CustomerWS {
         CustomerFacade customerFacade = (CustomerFacade) CouponSystem.getInstance().login("Yossi", "12346",
                 ClientType.CUSTOMER);
         customerFacade.purchaseCoupon(c);
+    }
+
+    // Collection<Coupon> getAllCoupons()
+    @RequestMapping(value = "/customer/getallcoupons", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Coupon> getAllCoupons() throws CouponSystemException {
+        CustomerFacade customerFacade = (CustomerFacade) CouponSystem.getInstance().login("Yossi", "12346",
+                ClientType.CUSTOMER);
+        return (List<Coupon>) customerFacade.getAllCoupons();
     }
 
     // Collection<Coupon> getAllPurchesedCoupons()

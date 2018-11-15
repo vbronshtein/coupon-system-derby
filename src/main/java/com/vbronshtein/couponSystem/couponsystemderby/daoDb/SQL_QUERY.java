@@ -63,6 +63,7 @@ public class SQL_QUERY {
     public static String SQL_Del_All_Expiried_Coupons_Cust = "DELETE FROM customer_coupon WHERE COUPON_ID IN (select ID from coupon where end_date <='%s')";
     public static String SQL_Del_All_Expiried_Coupons = "DELETE FROM coupon WHERE END_DATE<='%s'";
     public static String SQL_Get_Coupon_By_Title = "SELECT * FROM coupon WHERE TITLE='%s'";
+    public static String SQL_Get_All_Coupons = "SELECT * FROM coupon" ;
 
 
     //Database last ID Helper

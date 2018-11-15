@@ -1,19 +1,23 @@
 package com.vbronshtein.couponSystem.couponsystemderby.daoDb;
 
 
+import com.vbronshtein.couponSystem.couponsystemderby.beans.Company;
 import com.vbronshtein.couponSystem.couponsystemderby.beans.Coupon;
 import com.vbronshtein.couponSystem.couponsystemderby.beans.CouponType;
 import com.vbronshtein.couponSystem.couponsystemderby.connectionPool.ConnectionPool;
 import com.vbronshtein.couponSystem.couponsystemderby.exceptions.CouponSystemException;
 
+import javax.validation.constraints.Max;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Global Actions on Coupon table ( without dependencies to Companies and
  * Customers )
  *
  * @author vbronshtein
- *
  */
 public class GlobalCouponDbDao {
     private ConnectionPool pool;
@@ -25,6 +29,37 @@ public class GlobalCouponDbDao {
     public GlobalCouponDbDao() {
         super();
         this.pool = ConnectionPool.getInstance();
+    }
+
+    public Collection<Coupon> getAllCoupons() throws CouponSystemException {
+        Connection connection = pool.getConnection();
+
+        try {
+            Collection<Coupon> coupons = new ArrayList<>();
+            String sql = String.format(SQL_QUERY.SQL_Get_All_Coupons);
+
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Coupon coupon = new Coupon();
+                coupon.setId(rs.getLong("ID"));
+                coupon.setTitle(rs.getString("TITLE"));
+                coupon.setStartDate(rs.getDate("START_DATE"));
+                coupon.setEndDate(rs.getDate("END_DATE"));
+                coupon.setAmount(rs.getInt("AMOUNT"));
+                coupon.setType(CouponType.valueOf(rs.getString("TYPE")));
+                coupon.setMessage(rs.getString("MESSAGE"));
+                coupon.setPrice(rs.getDouble("PRICE"));
+                coupon.setImage(rs.getString("IMAGE"));
+                coupons.add(coupon);
+
+            }
+            return coupons;
+        } catch (SQLException e) {
+            throw new CouponSystemException("Fail to get all coupons", e);
+        } finally {
+            pool.returnConnection(connection);
+        }
     }
 
     /**
@@ -57,8 +92,7 @@ public class GlobalCouponDbDao {
     /**
      * Check if coupon is expired
      *
-     * @param title
-     *            Coupon title
+     * @param title Coupon title
      * @return boolean parameter if Coupon is expired
      * @throws CouponSystemException
      */
@@ -90,8 +124,7 @@ public class GlobalCouponDbDao {
     /**
      * Delete all expired Coupons
      *
-     * @param date
-     *            Coupon end Date
+     * @param date Coupon end Date
      * @throws CouponSystemException
      */
     public void deleteAllExpiriedCoupons(Date date) throws CouponSystemException {
@@ -117,8 +150,7 @@ public class GlobalCouponDbDao {
     /**
      * Get coupon by Title
      *
-     * @param title
-     *            Coupon title
+     * @param title Coupon title
      * @return coupon
      * @throws CouponSystemException
      */

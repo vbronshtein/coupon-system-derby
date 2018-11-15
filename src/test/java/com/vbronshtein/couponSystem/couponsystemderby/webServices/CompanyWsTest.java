@@ -59,7 +59,7 @@ public class CompanyWsTest {
 
         String hiltonVacation = createJsonCoupon("Hilton", new Date(System.currentTimeMillis()),
                 new Date(System.currentTimeMillis() + 1000 * 3600 * 24 * 2), 100, CouponType.TRAVELLING,
-                "Hilton vacation", 1000, "http://hilton.com");
+                "Hilton vacation", 1000, "https://upload.wikimedia.org/wikipedia/commons/8/8b/Tel_Aviv_Promenade_panoramics.jpg");
         String jerusalemTrip = createJsonCoupon("Trip in Jerusalem", new Date(System.currentTimeMillis()),
                 new Date(System.currentTimeMillis() + 1000 * 3600 * 24 * 20), 10, CouponType.TRAVELLING,
                 "Day trip in Jerusalem", 200, "http://israeltours.com");
@@ -79,7 +79,7 @@ public class CompanyWsTest {
     public void testC_updateCoupon() throws Exception {
         String hiltonVacation_new = createJsonCouponWithId(1, "Hilton", new Date(System.currentTimeMillis()),
                 new Date(System.currentTimeMillis() + 1000 * 3600 * 24 * 2), 100, CouponType.TRAVELLING,
-                "Hilton vacation", 555, "http://hilton.com");
+                "Hilton vacation", 555, "https://upload.wikimedia.org/wikipedia/commons/8/8b/Tel_Aviv_Promenade_panoramics.jpg");
         mockMvc.perform(put("/company/updateCoupon").contentType(MediaType.APPLICATION_JSON).content(hiltonVacation_new));
 
     }
