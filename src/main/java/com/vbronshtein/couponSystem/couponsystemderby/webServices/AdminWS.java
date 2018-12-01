@@ -165,13 +165,13 @@ public class AdminWS {
     }
 
     private AdminFacade getFacade(HttpServletRequest request) {
-        AdminFacade af = null;
-        try {
-            af = (AdminFacade) CouponSystem.getInstance().login("admin", "1234", ClientType.ADMIN);
-        } catch (CouponSystemException e) {
-            e.printStackTrace();
-        }
-//        AdminFacade af = (AdminFacade) request.getSession().getAttribute("facade");
+//        AdminFacade af = null;
+//        try {
+//            af = (AdminFacade) CouponSystem.getInstance().login("admin", "1234", ClientType.ADMIN);
+//        } catch (CouponSystemException e) {
+//            e.printStackTrace();
+//        }
+        AdminFacade af = (AdminFacade) request.getSession().getAttribute("facade");
         return af;
     }
 }

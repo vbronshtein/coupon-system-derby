@@ -1,6 +1,7 @@
 package com.vbronshtein.couponSystem.couponsystemderby.webServices;
 
 
+import com.vbronshtein.couponSystem.couponsystemderby.facade.AdminFacade;
 import com.vbronshtein.couponSystem.couponsystemderby.helper.TruncateAllTables;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -27,6 +28,7 @@ public class AdminWsTest {
 
     private MockMvc mockMvc;
     private TruncateAllTables truncateSQL = new TruncateAllTables();
+    private AdminFacade af = new AdminFacade();
 
     @InjectMocks
     private AdminWS adminWS;
