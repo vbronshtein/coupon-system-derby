@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.util.List;
 
@@ -18,12 +19,12 @@ import java.util.List;
 @CrossOrigin("*")
 public class CompanyWS {
 
+
     @RequestMapping(value = "/company/createcoupon", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity addCoupon(@RequestBody Coupon c) {
+    ResponseEntity addCoupon(@RequestBody Coupon c, HttpServletRequest request) {
         try {
-            CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login("Osem", "1236",
-                    ClientType.COMPANY);
+            CompanyFacade companyFacade = getFacade(request);
             companyFacade.createCoupon(c);
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(c);
         } catch (CouponSystemException e) {
@@ -37,10 +38,9 @@ public class CompanyWS {
     // Why not by Id in URL
     @RequestMapping(value = "/company/removecoupon/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity removeCoupon(@PathVariable("id") long id) {
+    ResponseEntity removeCoupon(@PathVariable("id") long id, HttpServletRequest request) {
         try {
-            CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login("Osem", "1236",
-                    ClientType.COMPANY);
+            CompanyFacade companyFacade = getFacade(request);
             companyFacade.removeCoupon(id);
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body("Delete Succedd");
         } catch (CouponSystemException e) {
@@ -52,10 +52,9 @@ public class CompanyWS {
     // void updateCoupon(Coupon coupon)
     @RequestMapping(value = "/company/updatecoupon", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity updateCoupon(@RequestBody Coupon c) {
+    ResponseEntity updateCoupon(@RequestBody Coupon c, HttpServletRequest request) {
         try {
-            CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login("Osem", "1236",
-                    ClientType.COMPANY);
+            CompanyFacade companyFacade = getFacade(request);
             companyFacade.updateCoupon(c);
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(c);
         } catch (CouponSystemException e) {
@@ -68,10 +67,9 @@ public class CompanyWS {
     // getCoupon(long couponId)
     @RequestMapping(value = "/company/getcoupon/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity getCoupon(@PathVariable("id") long id) {
+    ResponseEntity getCoupon(@PathVariable("id") long id, HttpServletRequest request) {
         try {
-            CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login("Osem", "1236",
-                    ClientType.COMPANY);
+            CompanyFacade companyFacade = getFacade(request);
             Coupon coupon = companyFacade.getCoupon(id);
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(coupon);
         } catch (CouponSystemException e) {
@@ -91,10 +89,9 @@ public class CompanyWS {
 
     @RequestMapping(value = "/company/getallcoupon", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity getCoupons() {
+    ResponseEntity getCoupons(HttpServletRequest request) {
         try {
-            CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login("Osem", "1236",
-                    ClientType.COMPANY);
+            CompanyFacade companyFacade = getFacade(request);
             List<Coupon> coupons = (List<Coupon>) companyFacade.getAllCoupons();
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(coupons);
         } catch (CouponSystemException e) {
@@ -107,10 +104,9 @@ public class CompanyWS {
     // Collection<Coupon> getCouponByType(CouponType couponType)
     @RequestMapping(value = "/company/getcouponbytype/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity getCouponByType(@PathVariable("type") CouponType type) {
+    ResponseEntity getCouponByType(@PathVariable("type") CouponType type, HttpServletRequest request) {
         try {
-            CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login("Osem", "1236",
-                    ClientType.COMPANY);
+            CompanyFacade companyFacade = getFacade(request);
             List<Coupon> coupons = (List<Coupon>) companyFacade.getCouponByType(type);
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(coupons);
         } catch (CouponSystemException e) {
@@ -123,10 +119,9 @@ public class CompanyWS {
     // Collection<Coupon> getCouponUptoPrice(double price)
     @RequestMapping(value = "/company/getcouponuptoprice/{price}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity getCouponUptoPrice(@PathVariable("price") double price) {
+    ResponseEntity getCouponUptoPrice(@PathVariable("price") double price, HttpServletRequest request) {
         try {
-            CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login("Osem", "1236",
-                    ClientType.COMPANY);
+            CompanyFacade companyFacade = getFacade(request);
             List<Coupon> coupons = (List<Coupon>) companyFacade.getCouponUptoPrice(price);
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(coupons);
         } catch (CouponSystemException e) {
@@ -138,15 +133,25 @@ public class CompanyWS {
     // Collection<Coupon> getCouponUpToDate(Date date)
     @RequestMapping(value = "/company/getcouponuptodate/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity getCouponUpToDate(@PathVariable("date") Date date) {
+    ResponseEntity getCouponUpToDate(@PathVariable("date") Date date, HttpServletRequest request) {
         try {
-            CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login("Osem", "1236",
-                    ClientType.COMPANY);
+            CompanyFacade companyFacade = getFacade(request);
             List<Coupon> coupons = (List<Coupon>) companyFacade.getCouponUpToDate(date);
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(coupons);
         } catch (CouponSystemException e) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).contentType(MediaType.TEXT_PLAIN)
                     .body(e.getMessage());
         }
+    }
+
+    private CompanyFacade getFacade(HttpServletRequest request) {
+//        CompanyFacade cf = null;
+//        try {
+//            cf = (CompanyFacade) CouponSystem.getInstance().login("Osem", "1236", ClientType.COMPANY);
+//        } catch (CouponSystemException e) {
+//            e.printStackTrace();
+//        }
+        CompanyFacade cf = (CompanyFacade) request.getSession().getAttribute("facade");
+        return cf;
     }
 }

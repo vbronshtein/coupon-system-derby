@@ -41,6 +41,7 @@ public class CouponSystem {
         return instance;
     }
 
+
     /**
      * Login method ,return facade after login
      *
@@ -53,25 +54,52 @@ public class CouponSystem {
      * @return facade Admin, Company or Customer
      * @throws com.vbronshtein.couponSystem.couponsystemderby.exceptions.CouponSystemException
      */
+//    public CouponClientFacade login(String name, String password, ClientType type) throws CouponSystemException {
+//        switch (type) {
+//            case ADMIN:
+//                if (name.equals("admin") && password.equals("1234")) {
+//                    return new AdminFacade();
+//                } else {
+//                    throw new CouponSystemException("Incorrect username or password");
+//                }
+//            case COMPANY:
+//                if (companyDbDao.login(name, password)) {
+//                    return new CompanyFacade(name);
+//                } else {
+//                    throw new CouponSystemException("Incorrect username or password");
+//                }
+//            case CUSTOMER:
+//                if (customerDbDao.login(name, password)) {
+//                    return new CustomerFacade(name);
+//                } else {
+//                    throw new CouponSystemException("Incorrect username or password");
+//                }
+//
+//            default:
+//                return null;
+//        }
+//
+//    }
+
     public CouponClientFacade login(String name, String password, ClientType type) throws CouponSystemException {
         switch (type) {
             case ADMIN:
                 if (name.equals("admin") && password.equals("1234")) {
                     return new AdminFacade();
                 } else {
-                    throw new CouponSystemException("Incorrect username or password");
+                    return null;
                 }
             case COMPANY:
                 if (companyDbDao.login(name, password)) {
                     return new CompanyFacade(name);
                 } else {
-                    throw new CouponSystemException("Incorrect username or password");
+                    return null;
                 }
             case CUSTOMER:
                 if (customerDbDao.login(name, password)) {
                     return new CustomerFacade(name);
                 } else {
-                    throw new CouponSystemException("Incorrect username or password");
+                    return null;
                 }
 
             default:

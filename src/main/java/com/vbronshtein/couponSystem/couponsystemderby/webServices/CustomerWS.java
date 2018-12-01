@@ -6,12 +6,14 @@ import com.vbronshtein.couponSystem.couponsystemderby.beans.CouponType;
 import com.vbronshtein.couponSystem.couponsystemderby.couponSys.ClientType;
 import com.vbronshtein.couponSystem.couponsystemderby.couponSys.CouponSystem;
 import com.vbronshtein.couponSystem.couponsystemderby.exceptions.CouponSystemException;
+import com.vbronshtein.couponSystem.couponsystemderby.facade.CompanyFacade;
 import com.vbronshtein.couponSystem.couponsystemderby.facade.CustomerFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -21,10 +23,9 @@ public class CustomerWS {
     // void purchaseCoupon(Coupon coupon)
     @RequestMapping(value = "/customer/purchasecoupon", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity purchaseCoupon(@RequestBody Coupon c) {
+    ResponseEntity purchaseCoupon(@RequestBody Coupon c, HttpServletRequest request) {
         try {
-            CustomerFacade customerFacade = (CustomerFacade) CouponSystem.getInstance().login("Yossi", "12346",
-                    ClientType.CUSTOMER);
+            CustomerFacade customerFacade = getFacade(request);
             customerFacade.purchaseCoupon(c);
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(c);
         } catch (CouponSystemException e) {
@@ -36,10 +37,9 @@ public class CustomerWS {
     // Collection<Coupon> getAllCoupons()
     @RequestMapping(value = "/customer/getallcoupons", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity getAllCoupons() {
+    ResponseEntity getAllCoupons(HttpServletRequest request) {
         try {
-            CustomerFacade customerFacade = (CustomerFacade) CouponSystem.getInstance().login("Yossi", "12346",
-                    ClientType.CUSTOMER);
+            CustomerFacade customerFacade = getFacade(request);
             List<Coupon> coupons = (List<Coupon>) customerFacade.getAllCoupons();
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(coupons);
         } catch (CouponSystemException e) {
@@ -51,10 +51,9 @@ public class CustomerWS {
     // Collection<Coupon> getAllPurchesedCoupons()
     @RequestMapping(value = "/customer/getallpurchesedcoupons", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity getAllPurchesedCoupons() {
+    ResponseEntity getAllPurchesedCoupons(HttpServletRequest request) {
         try {
-            CustomerFacade customerFacade = (CustomerFacade) CouponSystem.getInstance().login("Yossi", "12346",
-                    ClientType.CUSTOMER);
+            CustomerFacade customerFacade = getFacade(request);
             List<Coupon> coupons = (List<Coupon>) customerFacade.getAllPurchesedCoupons();
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(coupons);
         } catch (CouponSystemException e) {
@@ -66,10 +65,9 @@ public class CustomerWS {
     // Collection<Coupon> getAllPurchasedCouponsByType(CouponType couponType)
     @RequestMapping(value = "/customer/getallpurchasedcouponsbytype/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity getAllPurchasedCouponsByType(@PathVariable("type") CouponType type) {
+    ResponseEntity getAllPurchasedCouponsByType(@PathVariable("type") CouponType type, HttpServletRequest request ) {
         try {
-            CustomerFacade customerFacade = (CustomerFacade) CouponSystem.getInstance().login("Yossi", "12346",
-                    ClientType.CUSTOMER);
+            CustomerFacade customerFacade = getFacade(request);
             List<Coupon> coupons = (List<Coupon>) customerFacade.getAllPurchasedCouponsByType(type);
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(coupons);
         } catch (CouponSystemException e) {
@@ -81,16 +79,27 @@ public class CustomerWS {
     // Collection<Coupon> getAllPurchasedCouponsUpToPrice(double price)
     @RequestMapping(value = "/customer/getallpurchasedcouponsuptoprice/{price}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity getAllPurchasedCouponsUpToPrice(@PathVariable("price") double price) {
+    ResponseEntity getAllPurchasedCouponsUpToPrice(@PathVariable("price") double price, HttpServletRequest request) {
         try {
-            CustomerFacade customerFacade = (CustomerFacade) CouponSystem.getInstance().login("Yossi", "12346",
-                    ClientType.CUSTOMER);
+            CustomerFacade customerFacade = getFacade(request);
             List<Coupon> coupons = (List<Coupon>) customerFacade.getAllPurchasedCouponsUpToPrice(price);
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(coupons);
         } catch (CouponSystemException e) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).contentType(MediaType.TEXT_PLAIN)
                     .body(e.getMessage());
         }
+    }
+
+
+    private CustomerFacade getFacade(HttpServletRequest request) {
+//        CustomerFacade cf = null;
+//        try {
+//            cf = (CustomerFacade) CouponSystem.getInstance().login("Yossi", "12346", ClientType.CUSTOMER);
+//        } catch (CouponSystemException e) {
+//            e.printStackTrace();
+//        }
+        CustomerFacade cf = (CustomerFacade) request.getSession().getAttribute("facade");
+        return cf;
     }
 }
 
