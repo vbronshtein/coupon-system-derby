@@ -11,16 +11,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Login Servlet for get initial page
+ */
 @Controller
 public class LoginServlet {
+
+    /**
+     * WebService for aply Login form
+     * @param name
+     * @param pwd
+     * @param usertype
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/loginr", method = RequestMethod.POST)
     public String doPostRedirect(
             @RequestParam String name, @RequestParam String pwd, @RequestParam ClientType usertype,
             HttpServletRequest request
     ) {
 
-        // check which usertype we got!
-//        ClientTypentFacade cf = (new CouponSystem()).login(name, pwd); // should be get instance
         try {
             CouponClientFacade cf =  CouponSystem.getInstance().login(name, pwd, usertype);
             System.out.println(cf);
@@ -50,8 +60,6 @@ public class LoginServlet {
         return "redirect:http://localhost:8080/index.html";
 
         } catch (CouponSystemException e) {
-//            e.printStackTrace();
-//            e.getMessage();
             return "redirect:http://localhost:8080/index.html";
         }
 
