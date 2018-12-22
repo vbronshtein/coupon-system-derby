@@ -1,0 +1,20 @@
+<div
+  style="cursor: pointer;"
+  (click)="onSelect(index)"
+  class="list-group-item clearfix col-md-4">
+  <span class="center">
+      <img
+        [src]="coupon.image"
+        alt="{{ coupon.title }}"
+        class="img-responsive"
+        style="max-height: 150px;">
+    </span>
+    <br>
+  <div class="pull-left">
+    <h4 class="list-group-item-heading">{{ coupon.title }}</h4>
+  </div>
+  <div class="pull-right">
+      <h5 class="list-group-item-heading" style="color:green;">Price: {{ coupon.price }} ₪</h5>
+  </div>
+</div>
+

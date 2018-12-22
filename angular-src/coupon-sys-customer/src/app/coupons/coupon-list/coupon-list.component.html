@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-xs-12">
+    <app-coupon-item
+      *ngFor="let couponEl of coupons; let i = index"
+      [coupon]="couponEl"
+      [index]="i"
+      ></app-coupon-item>
+  </div>
+</div>
+ 

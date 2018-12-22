@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-xs-12">
+      <div
+        class="btn-group"
+        appDropdown>
+        <button
+          type="button"
+          class="btn btn-primary dropdown-toggle">
+          Filters <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a (click)="onTypeFilter()" style="cursor: pointer;">By Type</a></li>
+          <li><a style="cursor: pointer;" (click)="onPriceFilter()">Up To price</a></li>
+          <li><a style="cursor: pointer;" (click)="onClearFilter()">Clear Filter</a></li>
+        </ul>        
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="row" *ngIf = "typeFilter">
+      <div class="col-xs-5 form-group">
+          <label for="type">type</label>
+                <select class="form-control"
+                name="type"
+                id="type"
+                [(ngModel)]="selectedOption"
+                required
+                >
+                  <option value="RESTURANS">RESTURANS</option>
+                  <option value="ELECTRICITY">ELECTRICITY</option>
+                  <option value="FOOD">FOOD</option>
+                  <option value="HEALTH">HEALTH</option>
+                  <option value="SPORTS">SPORTS</option>
+                  <option value="CAMPING">CAMPING</option>
+                  <option value="TRAVELLING">TRAVELLING</option>
+                </select> 
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+              <button class="btn btn-success" type="button" (click)="onTypeFiterApply()" >Apply</button>
+            </div>
+          </div>
+  </div>
+
+  
+  <div class="row" *ngIf = "priceFilter">
+      <div class="col-xs-12">
+        <h1>Price Filter</h1>
+      </div>
+    </div>
+
+
+    <div class="row" *ngIf = "priceFilter">
+        <div class="col-xs-5 form-group">
+            <label for="type">price</label>
+            <input type="number"
+            class="form-control"
+                  name="type"
+                  id="type"
+                  [(ngModel)]="selectedOption"
+                  required> 
+          </div>
+          <div class="row">
+              <div class="col-xs-12">
+                <button class="btn btn-success" type="button" (click)="onPriceFiterApply()" >Apply</button>
+              </div>
+            </div>
+    </div>
+  <hr>
+
+
+
+<div class="row">
+  <div class="col-xs-12">
+    <app-coupon-purchased-item
+      *ngFor="let coupon of coupons; let i = index"
+      [coupon]="coupon"
+      [index]="i"
+      (click)="onSelectedItem(i)"
+      ></app-coupon-purchased-item>
+  </div>
+</div>

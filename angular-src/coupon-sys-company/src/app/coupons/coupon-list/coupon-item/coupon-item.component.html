@@ -1,0 +1,18 @@
+<a
+  style="cursor: pointer;"
+  [routerLink]="[index]"
+  routerLinkActive="active"
+  class="list-group-item clearfix">
+  <div class="pull-left">
+    <h4 class="list-group-item-heading">{{ coupon.title }}</h4>
+    <br>
+     <h6 class="list-group-item-heading" style="color:green;">Price: {{ coupon.price }} ₪ , Amount: {{ coupon.amount }}</h6>
+  </div>
+  <span class="pull-right">
+    <img
+      [src]="coupon.image"
+      alt="{{ coupon.title }}"
+      class="img-responsive"
+      style="max-height: 50px;">
+  </span>
+</a>

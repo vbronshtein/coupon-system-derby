@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row">
+      <div class="col-xs-12">
+        <img [src]="imagePath" class="img-responsive" style="max-height: 300px;">
+      </div>
+    </div>
+    <hr>
+    <div class="col-xs-12 form-group">
+      <label>Title</label>
+      <span class="form-control" style="background-color: WhiteSmoke;">{{editedItem.title}}</span>
+    </div>
+    <div class="col-xs-12 form-group">
+      <label>Start Date</label>
+      <span class="form-control" style="background-color: WhiteSmoke;">{{editedItem.startDate}}</span>
+    </div>
+    <div class="col-xs-12 form-group">
+      <label>End Date</label>
+      <span class="form-control" style="background-color: WhiteSmoke;">{{editedItem.endDate}}</span>
+    </div>
+    <div class="col-xs-12 form-group">
+      <label>Type</label>
+      <span class="form-control" style="background-color: WhiteSmoke;">{{editedItem.type}}</span>
+    </div>
+    <div class="col-xs-12 form-group">
+      <label>Message</label>
+      <span class="form-control" style="background-color: WhiteSmoke;">{{editedItem.message}}</span>
+    </div>
+    <div class="col-xs-12 form-group">
+      <label>Price</label>
+      <span class="form-control" style="background-color: Aquamarine;">{{editedItem.price}} ₪</span>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <button class="btn btn-primary" type="button" (click)="onBack()">Back</button>
+      </div>
+    </div>
+  </div>
+</div>
