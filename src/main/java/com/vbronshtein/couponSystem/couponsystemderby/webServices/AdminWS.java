@@ -15,18 +15,26 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * Admin WebaService class for ADMIN REST HTTP requests
+ */
 @RestController
 @CrossOrigin("*")
 public class AdminWS {
 
 
 
-    // void createCompany(Company company)
+
+    /**
+     * WebService for create new company
+     * @param comp
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/admin/createcompany", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity createCompany(@RequestBody Company comp, HttpServletRequest request) {
         try {
-//            AdminFacade adminFacade = (AdminFacade) CouponSystem.getInstance().login("admin", "1234", ClientType.ADMIN);
             AdminFacade adminFacade = getFacade(request);
             adminFacade.createCompany(comp);
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(comp);
@@ -36,7 +44,13 @@ public class AdminWS {
         }
     }
 
-    // void removeCompany(Company company)
+
+    /**
+     * WebService for remove company
+     * @param id
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/admin/removecompany/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity removeCompany(@PathVariable("id") long id, HttpServletRequest request) {
@@ -51,7 +65,12 @@ public class AdminWS {
 
     }
 
-    // void updateCompany(Company company)
+    /**
+     * WebService for update company
+     * @param comp
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/admin/updatecompany", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity updateCompany(@RequestBody Company comp, HttpServletRequest request) {
@@ -65,12 +84,15 @@ public class AdminWS {
         }
     }
 
-    // Collection<Company> getAllCompanies()
+    /**
+     * WebService for receive all company list
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/admin/getallcompanies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getAllCompanies(HttpServletRequest request) {
         try {
-//            AdminFacade adminFacade = (AdminFacade) CouponSystem.getInstance().login("admin", "1234", ClientType.ADMIN);
             AdminFacade adminFacade = getFacade(request);
             List<Company> companies = (List<Company>) adminFacade.getAllCompanies();
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(companies);
@@ -80,7 +102,12 @@ public class AdminWS {
         }
     }
 
-    // Company getCompany(long id)
+    /**
+     * WebService for get company by id
+     * @param id
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/admin/getcompany/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getCompany(@PathVariable("id") long id, HttpServletRequest request) {
@@ -94,7 +121,12 @@ public class AdminWS {
         }
     }
 
-    // createCustomer(Customer customer)
+    /**
+     * WebService for create customer
+     * @param customer
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/admin/createcustomer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity createCustomer(@RequestBody Customer customer, HttpServletRequest request) {
@@ -108,7 +140,12 @@ public class AdminWS {
         }
     }
 
-    // removeCustomer(Customer customer)
+    /**
+     * WebService for remove company
+     * @param id
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/admin/removecustomer/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity removeCustomer(@PathVariable("id") long id, HttpServletRequest request) {
@@ -122,7 +159,12 @@ public class AdminWS {
         }
     }
 
-    // updateCustomer(Customer customer)
+    /**
+     * WebService for update customer
+     * @param customer
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/admin/updatecustomer", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity updateCustomer(@RequestBody Customer customer, HttpServletRequest request) {
@@ -136,7 +178,11 @@ public class AdminWS {
         }
     }
 
-    // Collection<Customer> getAllCustomers()
+    /**
+     * WebService for Get all customers
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/admin/getallcustomers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getAllCustomers(HttpServletRequest request) {
@@ -150,7 +196,12 @@ public class AdminWS {
         }
     }
 
-    // Customer getCustomer(long id)
+    /**
+     * WebService for customer by id
+     * @param id
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/admin/getcustomer/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getCustomer(@PathVariable("id") long id, HttpServletRequest request) {
@@ -164,13 +215,12 @@ public class AdminWS {
         }
     }
 
+    /**
+     * Method for get facade from session
+     * @param request
+     * @return
+     */
     private AdminFacade getFacade(HttpServletRequest request) {
-//        AdminFacade af = null;
-//        try {
-//            af = (AdminFacade) CouponSystem.getInstance().login("admin", "1234", ClientType.ADMIN);
-//        } catch (CouponSystemException e) {
-//            e.printStackTrace();
-//        }
         AdminFacade af = (AdminFacade) request.getSession().getAttribute("facade");
         return af;
     }

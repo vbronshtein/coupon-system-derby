@@ -16,11 +16,19 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * Customer WebaService class for Customer REST HTTP requests
+ */
 @RestController
 @CrossOrigin("*")
 public class CustomerWS {
 
-    // void purchaseCoupon(Coupon coupon)
+    /**
+     * WebService for purchase coupone
+     * @param c
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/customer/purchasecoupon", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity purchaseCoupon(@RequestBody Coupon c, HttpServletRequest request) {
@@ -34,7 +42,11 @@ public class CustomerWS {
         }
     }
 
-    // Collection<Coupon> getAllCoupons()
+    /**
+     * WebService for get all coupons list
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/customer/getallcoupons", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getAllCoupons(HttpServletRequest request) {
@@ -48,7 +60,11 @@ public class CustomerWS {
         }
     }
 
-    // Collection<Coupon> getAllPurchesedCoupons()
+    /**
+     * WebService for get all purchased coupons
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/customer/getallpurchesedcoupons", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getAllPurchesedCoupons(HttpServletRequest request) {
@@ -62,7 +78,12 @@ public class CustomerWS {
         }
     }
 
-    // Collection<Coupon> getAllPurchasedCouponsByType(CouponType couponType)
+    /**
+     * WebService for get all purchased coupons by type
+     * @param type
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/customer/getallpurchasedcouponsbytype/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getAllPurchasedCouponsByType(@PathVariable("type") CouponType type, HttpServletRequest request ) {
@@ -76,7 +97,12 @@ public class CustomerWS {
         }
     }
 
-    // Collection<Coupon> getAllPurchasedCouponsUpToPrice(double price)
+    /**
+     * WebService for get all purchased coupons up to price
+     * @param price
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/customer/getallpurchasedcouponsuptoprice/{price}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getAllPurchasedCouponsUpToPrice(@PathVariable("price") double price, HttpServletRequest request) {
@@ -91,6 +117,11 @@ public class CustomerWS {
     }
 
 
+    /**
+     * Methods for read facade from session
+     * @param request
+     * @return
+     */
     private CustomerFacade getFacade(HttpServletRequest request) {
 //        CustomerFacade cf = null;
 //        try {

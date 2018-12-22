@@ -15,11 +15,20 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * Company WebaService class for Company REST HTTP requests
+ */
 @RestController
 @CrossOrigin("*")
 public class CompanyWS {
 
 
+    /**
+     * WebService for create new coupon
+     * @param c
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/company/createcoupon", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity addCoupon(@RequestBody Coupon c, HttpServletRequest request) {
@@ -34,8 +43,12 @@ public class CompanyWS {
 
     }
 
-    // void removeCoupon(Coupon coupon)
-    // Why not by Id in URL
+    /**
+     * WebService for remove coupon
+     * @param id
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/company/removecoupon/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity removeCoupon(@PathVariable("id") long id, HttpServletRequest request) {
@@ -49,7 +62,12 @@ public class CompanyWS {
         }
     }
 
-    // void updateCoupon(Coupon coupon)
+    /**
+     * WebService for update coupon
+     * @param c
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/company/updatecoupon", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity updateCoupon(@RequestBody Coupon c, HttpServletRequest request) {
@@ -64,7 +82,12 @@ public class CompanyWS {
 
     }
 
-    // getCoupon(long couponId)
+    /**
+     * WebService for get coupon
+     * @param id
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/company/getcoupon/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getCoupon(@PathVariable("id") long id, HttpServletRequest request) {
@@ -78,15 +101,11 @@ public class CompanyWS {
         }
     }
 
-    // Collection<Coupon> getAllCoupons()
-//    @RequestMapping(value = "/company/getallcoupon", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Coupon> getCoupons() throws CouponSystemException {
-//        CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login("Osem", "1236",
-//                ClientType.COMPANY);
-//        List<Coupon> result = (List<Coupon>) companyFacade.getAllCoupons();
-//        return result;
-//    }
-
+    /**
+     * WebService for get all coupons
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/company/getallcoupon", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getCoupons(HttpServletRequest request) {
@@ -98,10 +117,15 @@ public class CompanyWS {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).contentType(MediaType.TEXT_PLAIN)
                     .body(e.getMessage());
         }
-//        return result;
     }
 
-    // Collection<Coupon> getCouponByType(CouponType couponType)
+
+    /**
+     * WebService for get coupons by type
+     * @param type
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/company/getcouponbytype/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getCouponByType(@PathVariable("type") CouponType type, HttpServletRequest request) {
@@ -116,7 +140,12 @@ public class CompanyWS {
 
     }
 
-    // Collection<Coupon> getCouponUptoPrice(double price)
+    /**
+     * WebService for get coupons by price
+     * @param price
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/company/getcouponuptoprice/{price}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getCouponUptoPrice(@PathVariable("price") double price, HttpServletRequest request) {
@@ -130,7 +159,12 @@ public class CompanyWS {
         }
     }
 
-    // Collection<Coupon> getCouponUpToDate(Date date)
+    /**
+     * WebService for  get coupons by date
+     * @param date
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/company/getcouponuptodate/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getCouponUpToDate(@PathVariable("date") Date date, HttpServletRequest request) {
@@ -144,6 +178,11 @@ public class CompanyWS {
         }
     }
 
+    /**
+     * Method for read facede from session
+     * @param request
+     * @return
+     */
     private CompanyFacade getFacade(HttpServletRequest request) {
 //        CompanyFacade cf = null;
 //        try {
